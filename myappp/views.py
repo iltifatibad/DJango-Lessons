@@ -61,14 +61,13 @@ def newsupload(request):
         
         file_upload = request.FILES['myfile']
         file_name = file_upload.name
-        with open('media' + file_name , 'wb+') as destination:
+        with open('media/' + file_name , 'wb+') as destination: # MEDIA / 28MALL 
             for chunk in file_upload.chunks():
                 destination.write(chunk)
 
-        # category_name = request.POST.get('category_name')
-        # name = request.POST.get('name')
-        # description = request.POST.get('description')
-        print("Sekil Yuklendi")
+        category_name = request.POST.get('category_name')
+        name = request.POST.get('name')
+        description = request.POST.get('description')
         return HttpResponse(" File Uploaded " )
 
     return render(request,'NewsUpload.html')
