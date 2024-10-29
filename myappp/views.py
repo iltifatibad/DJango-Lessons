@@ -56,4 +56,19 @@ def login(request):
 
 
 def newsupload(request):
+
+    if request.method == 'POST' and 'myfile': # Multi Part Forms
+        
+        file_upload = request.FILES['myfile']
+        file_name = file_upload.name
+        with open('media' + file_name , 'wb+') as destination:
+            for chunk in file_upload.chunks():
+                destination.write(chunk)
+
+        # category_name = request.POST.get('category_name')
+        # name = request.POST.get('name')
+        # description = request.POST.get('description')
+        print("Sekil Yuklendi")
+        return HttpResponse(" File Uploaded " )
+
     return render(request,'NewsUpload.html')
