@@ -25,24 +25,21 @@ def registerfunc(request):
 
 def login(request):
     if request.method == 'POST':
-        email = request.POST.get('email')
+        email = request.POST.get('email') # iltifatibad@gmail.com
         password = request.POST.get('password') 
-
-        print(email)
-        print(password)
         
-        conn = sqlite3.connect("db.sqlite3") # Database e qosul
+        conn = sqlite3.connect("db.sqlite3") # Database e qosul # Conn = Connection
 
         cur = conn.cursor() # Database ucun cursor yarat
 
-        cur.execute("SELECT * FROM myappp_register WHERE Email = ?", (email,))
+        cur.execute("SELECT * FROM myappp_register WHERE Email = ?", (email,)) # select * from myappp_register where email = iltifatibad@gmail.com 
 
-        row = cur.fetchone() # Tuple Type
-        row_list = list(row)  # [ id : name : email : password ]
+        row = cur.fetchone() # Tuple Type (1, iltifat, iltifatibad@gmail.com , 12345)
+        row_list = list(row)  # [ id : name : email : password ] [ 1, iltifat, iltifatibad@gmail.com , 12345 ]
 
         if password in row_list:
             context = {
-                "name" : row_list[1],
+                "name" : row_list[1], # name = iltifat
             }
 
             return render(request, 'index.html', context)
@@ -53,6 +50,12 @@ def login(request):
 
 
     return render(request,"login.html")
+
+
+# --------------------------------------------------------------------------------------------------------
+
+
+
 
 
 def newsupload(request):
