@@ -37,16 +37,23 @@ def login(request):
 
         cur.execute("SELECT * FROM myappp_register WHERE Email = ?", (email,))
 
-        row = cur.fetchone()
-        row_list = list(row)
+        row = cur.fetchone() # Tuple Type
+        row_list = list(row)  # [ id : name : email : password ]
 
         if password in row_list:
             context = {
-                "email" : email,
+                "name" : row_list[1],
             }
+
+            return render(request, 'index.html', context)
+            # return HttpResponse(request,"index.html",context)
 
         else :
             return redirect("/Login")
 
 
     return render(request,"login.html")
+
+
+def newsupload(request):
+    return render(request,'NewsUpload.html')

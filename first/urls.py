@@ -23,6 +23,8 @@ urlpatterns = [
     path('',views.index),
     path('salam/',views.salam),
     path('Register/',views.registerfunc),
+    path('NewsUpload/',views.newsupload),
+
 
     path('Login/',views.login) # 127.0.0.1:8000/Login
 ]
