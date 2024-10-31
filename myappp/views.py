@@ -1,12 +1,32 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-from .models import register
+from .models import *
 import sqlite3
 from django.shortcuts import redirect
 # Create your views here.
 
 def index(request):
-    return render(request,'index.html')
+
+    conn = sqlite3.connect("db.sqlite3") # DataBase e qosul
+
+    cur = conn.cursor() # Database ucun cursor yarat
+
+    cur.execute(" SELECT * FROM myappp_news_data ORDER BY RANDOM() LIMIT 1 ") # select * from myappp_register where email = iltifatibad@gmail.com 
+
+    row = cur.fetchone()
+
+    row_list = list(row)
+    
+    # [1, 'media/Photo.jpg', 'Forest', 'Mountains', 'Beauty Of Mountains']
+    #  0,      1                 2          3                4
+    context = {
+            "img_path" : row_list[1], # img_path = /media/Photo.jpg
+            "category_name" : row_list[2],
+            "img_name" : row_list[3],
+            "description" : row_list[4]
+    }
+
+    return render(request,'index.html',context)
     
 
 def salam(request):
@@ -55,22 +75,23 @@ def login(request):
 # --------------------------------------------------------------------------------------------------------
 
 
-
-
-
 def newsupload(request):
 
     if request.method == 'POST' and 'myfile': # Multi Part Forms
-        
+        category_name = request.POST.get('category_name')
+        name = request.POST.get('name')
+        description = request.POST.get('Description')
+
         file_upload = request.FILES['myfile']
-        file_name = file_upload.name
-        with open('media/' + file_name , 'wb+') as destination: # MEDIA / 28MALL 
+        file_name = file_upload.name # Faylin Adi 
+        img_path = 'media/' + file_name
+        with open(img_path, 'wb+') as destination: # MEDIA / 28MALL 
             for chunk in file_upload.chunks():
                 destination.write(chunk)
 
-        category_name = request.POST.get('category_name')
-        name = request.POST.get('name')
-        description = request.POST.get('description')
+        news_data.objects.create(img_path = img_path, category_name = category_name, name = name, description = description)
+        
+        
         return HttpResponse(" File Uploaded " )
 
     return render(request,'NewsUpload.html')

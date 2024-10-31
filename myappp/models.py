@@ -21,13 +21,13 @@ class news_data(models.Model):
     description = models.CharField(max_length=200)
     
 
-class xeber_yukle(models.Model):
+# class xeber_yukle(models.Model):
 
-    img_path_yukle = models.CharField(max_length=200)
+#     img_path_yukle = models.CharField(max_length=200)
 
-    category_name_yukle = models.CharField(max_length=200)
+#     category_name_yukle = models.CharField(max_length=200)
 
-    name_yukle = models.CharField(max_length=200)
+#     name_yukle = models.CharField(max_length=200)
 
-    description_yukle = models.CharField(max_length=200)
+#     description_yukle = models.CharField(max_length=200)
     
