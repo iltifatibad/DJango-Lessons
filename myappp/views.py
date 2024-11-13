@@ -7,24 +7,46 @@ from django.shortcuts import redirect
 
 def index(request):
 
+    myimg = []   #[media/Photo.jpg, media/Photo2.jpg, media/Photo3.jpg]
+    myname = []     #[Forest, Forest2, Forest3]
+    mytopic = []  #[Mountains, Mountains2, Mountains3]
+    mydesc = []   #[Beauty Of Mountains, Beauty Of Mountains2, Beauty Of Mountains3]
+
+
     conn = sqlite3.connect("db.sqlite3") # DataBase e qosul
 
     cur = conn.cursor() # Database ucun cursor yarat
 
-    cur.execute(" SELECT * FROM myappp_news_data ORDER BY RANDOM() LIMIT 1 ") # select * from myappp_register where email = iltifatibad@gmail.com 
-
-    row = cur.fetchone()
-
-    row_list = list(row)
+    for i in range (1 , 7): # i = 1
+            cur.execute(" SELECT * FROM myappp_news_data ORDER BY RANDOM() LIMIT 1 ") # select * from myappp_register where email = iltifatibad@gmail.com 
     
-    # [1, 'media/Photo.jpg', 'Forest', 'Mountains', 'Beauty Of Mountains']
-    #  0,      1                 2          3                4
+            # (1, 'media/Photo.jpg', 'Forest', 'Mountains', 'Beauty Of Mountains') # Tuple 
+            # (2, 'media/Photo2.jpg', 'Forest2', 'Mountains2', 'Beauty Of Mountains2') # Tuple 
+            # (3, 'media/Photo3.jpg', 'Forest3', 'Mountains3', 'Beauty Of Mountains3') # Tuple 
+
+            row = cur.fetchone()x
+
+            row_list = list(row)  
+            
+            myimg.append(row_list[1])
+            myname.append(row_list[2])
+            mytopic.append(row_list[3])
+            mydesc.append(row_list[4])
+            
+    
+
+    
     context = {
-            "img_path" : row_list[1], # img_path = /media/Photo.jpg
-            "category_name" : row_list[2],
-            "img_name" : row_list[3],
-            "description" : row_list[4]
+            "img_path" : myimg,
+            "category_name" :myname,
+            "img_name" : mytopic,
+            "description" : mydesc
     }
+
+    print(myimg)
+    print(myname)
+    print(mytopic)
+    print(mydesc)
 
     return render(request,'index.html',context)
     
